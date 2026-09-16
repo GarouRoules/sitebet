@@ -357,6 +357,19 @@
 			.game-choice { min-height: 180px; }
 			.game-choice-art { height: 160px; }
 			.machine { max-width: 100%; }
+			.mines-game { padding: 10px; }
+			.mines-panel { width: min(100%, 520px); padding: 8px 9px 10px; }
+			.mines-header { flex-wrap: wrap; }
+			.mines-brand-group { flex-wrap: wrap; }
+			.mines-layout { grid-template-columns: 1fr; }
+			.mines-left { padding: 0; border-right: 0; }
+			.mines-right { gap: 8px; }
+			.mines-board { width: min(100%, 340px); gap: 6px; }
+			.mine-cell { border-radius: 8px; }
+			.mines-action-row { flex-direction: column; align-items: stretch; }
+			.mines-bet-wrap { justify-content: space-between; }
+			.mines-bet { width: 100%; }
+			.mines-btn { width: 100%; }
 		}
 		@media (max-width: 480px) {
 			.shell { width: min(100% - 12px, 420px); }
@@ -379,6 +392,20 @@
 			.quick-bets { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 			.big-win-content { width: min(90vw, 360px); padding: 20px 18px; }
 			.big-win-video { width: min(72vw, 290px); }
+			.mines-header { gap: 8px; }
+			.mines-brand-chip { min-width: 74px; height: 30px; font-size: 13px; }
+			.mines-help-link { height: 30px; padding: 0 12px; font-size: 11px; }
+			.mines-balance-strip { width: 100%; justify-content: space-between; }
+			.mines-balance-strip .amount { font-size: 13px; }
+			.mines-toolbar { flex-direction: column; align-items: stretch; }
+			.mines-toolbar-select { width: 100%; justify-content: space-between; }
+			.mines-stats { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+			.mines-stat { padding: 8px 6px; }
+			.mines-stat-label { letter-spacing: .08em; font-size: 9px; }
+			.mines-stat-value { font-size: 14px; }
+			.mines-next-win { width: 100%; justify-content: center; }
+			.mines-board { width: 100%; max-width: 290px; gap: 5px; }
+			.mine-cell { border-radius: 7px; font-size: 12px; }
 		}
 
 		@keyframes shake { 0% { transform: translateY(-3px); } 50% { transform: translateY(3px); } 100% { transform: translateY(-3px); } }
@@ -458,12 +485,12 @@
 			<div class="game-picker-grid">
 				<button class="game-choice" type="button" data-game="slot">
 					<span class="game-choice-badge">Exclusive</span>
-					<img class="game-choice-art" src="https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=900&q=80" alt="Slots do Iagão" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?auto=format&fit=crop&w=900&q=80';">
+					<img class="game-choice-art" src="./logoslots.jpg" alt="Slots do Iagão" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=900&q=80';">
 					<span class="game-choice-info"><span class="game-choice-title">Slots do Iagão</span><span class="game-choice-tag">Slot</span></span>
 				</button>
 				<button class="game-choice" type="button" data-game="mines">
 					<span class="game-choice-badge">Exclusive</span>
-					<img class="game-choice-art" src="https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?auto=format&fit=crop&w=900&q=80" alt="Minas do Iagão" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=900&q=80';">
+					<img class="game-choice-art" src="./mineslogo.jpg" alt="Minas do Iagão" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?auto=format&fit=crop&w=900&q=80';">
 					<span class="game-choice-info"><span class="game-choice-title">Minas do Iagão</span><span class="game-choice-tag">Game</span></span>
 				</button>
 			</div>
@@ -1161,7 +1188,7 @@
 			nariz: assetPath('SAMUEL COINS.mp4'),
 			diamante: assetPath('JOAO MAGICO.mp4'),
 			cesta: assetPath('IAGO MONEY.mp4'),
-			anel: assetPath('Cadeira de Rodas Chroma.webm'),
+			anel: assetPath('atilaganha.mp4'),
 			atilaganho: assetPath('atilaganha.mp4')
 		};
 		const stopBigWinMusic = () => {
@@ -1182,7 +1209,7 @@
 			bigWinVideo.pause();
 			bigWinVideo.removeAttribute('src');
 			bigWinVideo.classList.remove('ready');
-			const selectedWinVideo = winVideos[symbolKey] || winVideos.atilaganho || winVideos.trevo;
+			const selectedWinVideo = winVideos[symbolKey] || winVideos.anel || winVideos.atilaganho || winVideos.trevo;
 			bigWinVideo.src = selectedWinVideo;
 			bigWinVideo.classList.add('ready');
 			bigWinVideo.load();
