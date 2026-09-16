@@ -936,6 +936,11 @@
 			if (!safeCount) return 1;
 			return Number((1.3 ** safeCount).toFixed(2));
 		};
+		const getDynamicMineCount = (baseMineCount = 3, stakeValue = 1, accountBalance = balance) => {
+			const riskValue = Math.max(Number(stakeValue) || 1, Number(accountBalance) || 0);
+			const extraMines = Math.max(0, Math.floor((riskValue - 100) / 25));
+			return Math.min(24, Math.max(1, Number(baseMineCount) + extraMines));
+		};
 		const syncMinesButtonState = () => {
 			if (!minesCashoutBtn) return;
 			const isRoundLive = Boolean(minesRoundActive && minesState && minesState.status === 'playing');
@@ -978,7 +983,10 @@
 		const initMinesGame = () => {
 			const rows = 5;
 			const cols = 5;
-			const mineCount = Number(selectedMineCount || minesMineCountSelect?.value || 3);
+			const bet = Math.max(1, Number(minesBet.value || 1));
+			const mineCount = getDynamicMineCount(Number(selectedMineCount || minesMineCountSelect?.value || 3), bet, balance);
+			selectedMineCount = mineCount;
+			if (minesMineCountSelect) minesMineCountSelect.value = String(mineCount);
 			const board = Array.from({ length: rows * cols }, () => ({ mine: false, revealed: false, flagged: false }));
 			const positions = [...Array(board.length).keys()].sort(() => Math.random() - 0.5);
 			positions.slice(0, mineCount).forEach(index => board[index].mine = true);
@@ -1097,7 +1105,8 @@
 				return;
 			}
 			if (minesMineCountSelect) {
-				selectedMineCount = Math.min(24, Math.max(1, Number(minesMineCountSelect.value || 3)));
+				selectedMineCount = getDynamicMineCount(Number(minesMineCountSelect.value || 3), bet, balance);
+				minesMineCountSelect.value = String(selectedMineCount);
 			}
 			playMinesSound('click');
 			minesBet.value = String(bet);
@@ -1113,7 +1122,7 @@
 			refreshMinesBalanceUI();
 			updateMinesMultiplier();
 			syncMinesButtonState();
-			minesMessage.textContent = `Aposta iniciada. Há ${selectedMineCount} minas no tabuleiro.`;
+			minesMessage.textContent = `Aposta iniciada. Há ${selectedMineCount} minas no tabuleiro. Risco maior acima de R$ 100.`;
 		};
 		if (minesMineCountSelect) {
 			minesMineCountSelect.addEventListener('change', () => {
@@ -1280,20 +1289,33 @@
 		betAmount.addEventListener('input', () => {
 			quickBets.forEach(option => option.classList.toggle('active', Number(option.dataset.value) === Number(betAmount.value)));
 		});
-		const multiplierOptions = [
-			{ value: null, weight: 65 },
-			{ value: '2x', weight: 20 },
-			{ value: '5x', weight: 10 },
-			{ value: '10x', weight: 4 },
-			{ value: '100x', weight: 1 }
-		];
-		const chooseMultiplier = () => {
-			const roll = Math.random() * 100;
+		const getSlotRiskProfile = (stakeValue = 1, accountBalance = balance) => {
+			const liveValue = Math.max(Number(stakeValue) || 1, Number(accountBalance) || 0);
+			if (liveValue <= 100) return { one: 58, two: 24, five: 12, ten: 5, hundred: 1 };
+			const extraRisk = Math.max(0, Math.floor((liveValue - 100) / 25));
+			const one = 68 + extraRisk * 8;
+			const two = Math.max(10, 24 - extraRisk * 4);
+			const five = Math.max(4, 12 - extraRisk * 2);
+			const ten = Math.max(1, 5 - extraRisk);
+			const hundred = Math.max(0, 1 - Math.floor(extraRisk / 3));
+			return { one, two, five, ten, hundred };
+		};
+		const chooseMultiplier = (stakeValue = Number(betAmount.value) || 1, accountBalance = balance) => {
+			const risk = getSlotRiskProfile(stakeValue, accountBalance);
+			const multiplierOptions = [
+				{ value: '1x', weight: risk.one },
+				{ value: '2x', weight: risk.two },
+				{ value: '5x', weight: risk.five },
+				{ value: '10x', weight: risk.ten },
+				{ value: '100x', weight: risk.hundred }
+			];
+			const totalWeight = multiplierOptions.reduce((sum, option) => sum + option.weight, 0);
+			const roll = Math.random() * totalWeight;
 			let range = 0;
 			return multiplierOptions.find(option => {
 				range += option.weight;
 				return roll < range;
-			});
+			}) || multiplierOptions[0];
 		};
 		soundToggle.addEventListener('click', () => {
 			soundEnabled = !soundEnabled;
@@ -1340,7 +1362,7 @@
 				return;
 			}
 			const formattedAmount = amount.toLocaleString('pt-BR');
-			const selectedMultiplier = chooseMultiplier();
+			const selectedMultiplier = chooseMultiplier(amount, balance);
 			spinButton.disabled = true;
 			balance -= amount;
 			updateBalance();
