@@ -1,0 +1,12 @@
+﻿
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="220" viewBox="0 0 400 220">
+  <defs>
+    <linearGradient id="g" x1="0" x2="1">
+      <stop offset="0%" stop-color="#1c0e0d"/>
+      <stop offset="100%" stop-color="#7f2218"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="220" fill="url(#g)"/>
+  <text x="50%" y="52%" text-anchor="middle" fill="#f7d25c" font-family="Arial, sans-serif" font-size="42" font-weight="700">FIRE SLOT</text>
+</svg>
+
