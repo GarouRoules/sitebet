@@ -384,8 +384,8 @@
 	</div>
 	<div class="big-win" id="bigWin" aria-live="assertive" aria-hidden="true">
 		<div class="big-win-content">
-			<audio id="bigWinMusic" preload="auto" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
-			<audio id="smallWinMusic" preload="auto" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"></audio>
+			<audio id="bigWinMusic" preload="auto" src="./Grande ganho.mp3"></audio>
+			<audio id="smallWinMusic" preload="auto" src="./sensacional.mp3"></audio>
 			<video id="bigWinVideo" class="big-win-video" muted playsinline preload="auto"></video>
 			<p class="big-win-kicker">Betão Do Iagão</p>
 			<h2 class="big-win-title">GRANDE<br>GANHO</h2>
@@ -511,7 +511,7 @@
 			</section>
 
 			<section class="machine" aria-label="Jogo de slot Betão Do Iagão">
-				<audio id="slotMusic" loop preload="auto" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"></audio>
+				<audio id="slotMusic" loop preload="auto" src="./music.mp3"></audio>
 				<div class="machine-top"><span><i class="light"></i> mesa aberta</span><span>NR-001</span></div>
 				<div class="reels-wrap">
 					<div class="paylines" aria-hidden="true">
@@ -564,12 +564,13 @@
 	</div>
 
 	<script>
+		const assetPath = fileName => `./${encodeURI(fileName)}`;
 		const symbols = {
-			trevo: { alt: 'Trevo de notas', odd: 1.20, image: 'TREVO DE NOTAS.jpg' },
-			nariz: { alt: 'Nariz money', odd: 1.35, image: 'NARIZ MONEY.jpg' },
-			diamante: { alt: 'Cifra de diamante', odd: 1.65, image: 'CIFRA DE DIAMNTE.jpg' },
-			cesta: { alt: 'Cesta de moeda', odd: 2, image: 'CESTA DE MOEDA.jpg' },
-			anel: { alt: 'Anel de dima', odd: 2.50, image: 'ANEL DE DIMA.jpg' },
+			trevo: { alt: 'Trevo de notas', odd: 1.20, image: assetPath('TREVO DE NOTAS.jpg') },
+			nariz: { alt: 'Nariz money', odd: 1.35, image: assetPath('NARIZ MONEY.jpg') },
+			diamante: { alt: 'Cifra de diamante', odd: 1.65, image: assetPath('CIFRA DE DIAMNTE.jpg') },
+			cesta: { alt: 'Cesta de moeda', odd: 2, image: assetPath('CESTA DE MOEDA.jpg') },
+			anel: { alt: 'Anel de dima', odd: 2.50, image: assetPath('ANEL DE DIMA.jpg') },
 			wild: { alt: 'Wild', image: null }
 		};
 		const symbolKeys = Object.keys(symbols);
@@ -1121,11 +1122,11 @@
 			}, 900);
 		};
 		const winVideos = {
-			trevo: 'VITIN CADEIRA.mp4',
-			nariz: 'SAMUEL COINS.mp4',
-			diamante: 'JOAO MAGICO.mp4',
-			cesta: 'IAGO MONEY.mp4',
-			anel: 'Cadeira de Rodas Chroma.webm'
+			trevo: assetPath('VITIN CADEIRA.mp4'),
+			nariz: assetPath('SAMUEL COINS.mp4'),
+			diamante: assetPath('JOAO MAGICO.mp4'),
+			cesta: assetPath('IAGO MONEY.mp4'),
+			anel: assetPath('Cadeira de Rodas Chroma.webm')
 		};
 		const stopBigWinMusic = () => {
 			bigWinMusic.pause();
