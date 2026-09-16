@@ -106,11 +106,13 @@
 		.game-choice-info { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 14px 16px 16px; background: linear-gradient(180deg, rgba(12,15,21,.2), rgba(12,15,21,.9)); }
 		.game-choice-title { font-size: 20px; letter-spacing: -.04em; }
 		.game-choice-tag { color: var(--gold); font: 700 10px 'DM Mono', monospace; letter-spacing: .08em; text-transform: uppercase; }
-		.mines-game { position: fixed; inset: 0; z-index: 18; display: none; place-items: center; padding: 18px; background: rgba(6, 15, 30, .78); backdrop-filter: blur(10px); }
+		.mines-game { position: fixed; inset: 0; z-index: 18; display: none; place-items: center; padding: 18px; background: rgba(6, 15, 30, .78); backdrop-filter: blur(10px); overflow-y: auto; -webkit-overflow-scrolling: touch; }
 		.mines-game.show { display: grid; }
 		.mines-game { font-family: 'Open Sans', Arial, sans-serif; }
 		.mines-panel {
 			width: min(100%, 980px);
+			max-height: calc(100vh - 36px);
+			overflow: auto;
 			padding: 10px 14px 12px;
 			border: 1px solid rgba(95, 168, 255, .45);
 			border-radius: 20px;
@@ -562,7 +564,7 @@
 	</div>
 	<div class="shell" id="gameShell">
 		<header>
-			<div class="brand"><div class="brand-mark"><img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=300&q=80" alt="Betão Do Iagão" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?auto=format&fit=crop&w=300&q=80';"><span hidden>7</span></div><div class="brand-name">Betão <em>Do Iagão</em></div></div>
+			<div class="brand"><div class="brand-mark"><img src="./logo-betao.jpg" alt="Betão Do Iagão" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=300&q=80';"><span hidden>7</span></div><div class="brand-name">Betão <em>Do Iagão</em></div></div>
 			<div class="account-actions"><button class="account-button" id="slotExitBtn" type="button" style="display:none;">Sair do jogo</button><span class="account-name" id="accountName"></span><button class="account-button" id="accountButton" type="button">ENTRAR</button><button class="sound-toggle" id="soundToggle" type="button" aria-label="Ativar música" aria-pressed="false" title="Ativar música">🔇</button></div>
 		</header>
 
