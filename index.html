@@ -341,9 +341,44 @@
 		.multiplier-panel { align-self: center; padding: 14px 12px; border: 2px solid var(--gold); border-radius: 8px; background: linear-gradient(145deg, #202630, #0c0f15); box-shadow: 0 15px 45px rgba(0,0,0,.45); }
 		.multiplier-wheel { width: 128px; height: 128px; }
 		footer { padding-bottom: 16px; text-align: center; }
+		@media (max-width: 900px) {
+			.shell { width: min(100% - 20px, 760px); }
+			main { grid-template-columns: 1fr; max-width: 500px; margin: 0 auto; }
+			.multiplier-panel { width: min(100%, 420px); justify-self: center; }
+			.game-picker-grid { grid-template-columns: 1fr; max-width: 520px; margin: 0 auto; }
+			.game-choice { min-height: 200px; }
+			.game-choice-art { height: 180px; }
+		}
 		@media (max-width: 700px) {
 			main { grid-template-columns: 1fr; max-width: 430px; margin: 0 auto; }
 			.multiplier-panel { width: 100%; }
+			.game-picker-card { padding: 18px 14px 20px; }
+			.game-picker-header { flex-direction: column; align-items: flex-start; }
+			.game-choice { min-height: 180px; }
+			.game-choice-art { height: 160px; }
+			.machine { max-width: 100%; }
+		}
+		@media (max-width: 480px) {
+			.shell { width: min(100% - 12px, 420px); }
+			header { padding: 12px 10px 10px; }
+			.brand-name { font-size: 11px; }
+			.account-name { display: none; }
+			.account-button { padding: 8px 10px; font-size: 10px; }
+			.game-picker-grid { gap: 12px; }
+			.game-choice { min-height: 170px; }
+			.game-choice-art { height: 150px; }
+			.game-choice-info { padding: 12px 12px 14px; }
+			.game-choice-title { font-size: 17px; }
+			.machine { padding: 10px; }
+			.reels-wrap { padding: 7px; }
+			.reels { gap: 5px; }
+			.reel { font-size: clamp(20px, 7vw, 30px); }
+			.reel img { width: 68%; height: 68%; }
+			.bet-input-row { display: grid; gap: 8px; }
+			.bet-input { width: 100%; }
+			.quick-bets { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+			.big-win-content { width: min(90vw, 360px); padding: 20px 18px; }
+			.big-win-video { width: min(72vw, 290px); }
 		}
 
 		@keyframes shake { 0% { transform: translateY(-3px); } 50% { transform: translateY(3px); } 100% { transform: translateY(-3px); } }
@@ -1126,7 +1161,8 @@
 			nariz: assetPath('SAMUEL COINS.mp4'),
 			diamante: assetPath('JOAO MAGICO.mp4'),
 			cesta: assetPath('IAGO MONEY.mp4'),
-			anel: assetPath('Cadeira de Rodas Chroma.webm')
+			anel: assetPath('Cadeira de Rodas Chroma.webm'),
+			atilaganho: assetPath('atilaganha.mp4')
 		};
 		const stopBigWinMusic = () => {
 			bigWinMusic.pause();
@@ -1146,7 +1182,8 @@
 			bigWinVideo.pause();
 			bigWinVideo.removeAttribute('src');
 			bigWinVideo.classList.remove('ready');
-			bigWinVideo.src = winVideos[symbolKey] || winVideos.trevo;
+			const selectedWinVideo = winVideos[symbolKey] || winVideos.atilaganho || winVideos.trevo;
+			bigWinVideo.src = selectedWinVideo;
 			bigWinVideo.classList.add('ready');
 			bigWinVideo.load();
 			bigWinVideo.play().catch(() => {});
